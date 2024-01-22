@@ -5,7 +5,6 @@ import net.strangled.aldaris.catan.game.CatanGame.GameState;
 public class RoadBuilding extends GameState {
 	public static final int ID = 777;
 	public RoadBuilding() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -19,15 +18,19 @@ public class RoadBuilding extends GameState {
 	}
 	
 	@Override
-	public boolean canDoCommand(CatanGame cg, Command command) {
-		//only roads can be built
-		return !haveTwoRoadsBeenBuilt(cg) && command.getId() == RoadBuilding.ID;
+	public boolean canApply(Command command, CatanGame catanGame) {
+		return command.canApply(catanGame, this);
 	}
+	@Override
+	public void apply(Command command, CatanGame catanGame) {
+		command.canApply(catanGame, this);
+	}
+	
 
 	@Override
 	public GameState getNextState(CatanGame cg) {
 		if (haveTwoRoadsBeenBuilt(cg)) {
-			if (RegularPlay.haveDiceRolledSinceLastEndTurn(cg.getCommandHistory())) {
+			if (cg.haveDiceRolledSinceLastEndTurn()) {
 				return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);
 			}
 			else {

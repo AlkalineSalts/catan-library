@@ -39,9 +39,13 @@ public class RollDice extends Command {
 		return ID;
 	}
 	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll r) {
+		return super.isPlayersTurn(cg);
+	}
 
 	@Override
-	public void apply(CatanGame cg) {
+	public void apply(CatanGame cg, RegularPlayPreRoll r) {
 		//this massive one liner gets hexagons with the given number
 		var catanHexagons = cg.getCatanBoard().getCoordinateToDataHexagon().values().stream().filter(hexagon -> hexagon.getCollectResourceNumber() == rolledNumber).toList();
 		//gives each player their resources, going over all the points

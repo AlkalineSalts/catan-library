@@ -20,9 +20,8 @@ public class CommandFactory {
 		idToMakeFunction.put(PlaceRoad.ID, PlaceRoad::new);
 		idToMakeFunction.put(PlayDevelopmentCard.ID, PlayDevelopmentCard::new);
 		idToMakeFunction.put(PlaceSettlement.ID, PlaceSettlement::new);
-		idToMakeFunction.put(ResourcePickMonopoly.ID, ResourcePickMonopoly::new);
-		idToMakeFunction.put(ResourcePickYearOfPlenty.ID, ResourcePickYearOfPlenty::new);
-		idToMakeFunction.put(StealFrom.ID, StealFrom::new);
+		idToMakeFunction.put(ChooseResource.ID, ChooseResource::new);
+		idToMakeFunction.put(ChoosePlayer.ID, ChoosePlayer::new);
 		idToMakeFunction.put(MakeCity.ID, MakeCity::new);
 		
 		

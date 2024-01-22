@@ -19,7 +19,8 @@ public class Util {
 		var resourceMap = Json.createArrayBuilder();
 		for (Map.Entry<Resource, Integer> entry : map.entrySet()) {
 			var entryObject = Json.createObjectBuilder();
-			entryObject.add(keyString, entry.getKey().getId());
+			
+			entryObject.add(keyString, entry.getKey().name());
 			entryObject.add(valueString, entry.getValue());
 			resourceMap.add(entryObject);
 		}
@@ -30,7 +31,7 @@ public class Util {
 		EnumMap<Resource, Integer> map = new EnumMap<>(Resource.class);
 		for (JsonValue resource : array) {
 			var resourceObject = (JsonObject)resource;
-			map.put(Resource.idToResource(resourceObject.getInt(keyString)), resourceObject.getInt(valueString));
+			map.put(Resource.valueOf(resourceObject.getString(keyString)), resourceObject.getInt(valueString));
 		}
 		return map;
 	}

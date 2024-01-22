@@ -29,8 +29,17 @@ public class PlayDevelopmentCard extends Command {
 	}
 	
 	@Override
-	public boolean canApply(CatanGame cg) {
-		if (!super.canApply(cg)) {return false;}
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll r) {return canApply(cg);}
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll r) {return canApply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll r) {apply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll r) {apply(cg);}
+	
+	
+	private boolean canApply(CatanGame cg) {
+		if (!super.isPlayersTurn(cg)) {return false;}
 		//checks to make sure no other development cards have been played this turn
 		if (cg.getCommandsDoneThisTurn().stream().anyMatch(command -> command.getId() == PlayDevelopmentCard.ID))
 		{return false;}
@@ -47,8 +56,8 @@ public class PlayDevelopmentCard extends Command {
 		
 	}
 	
-	@Override
-	public void apply(CatanGame cg) {
+	
+	private void apply(CatanGame cg) {
 		cg.getPlayerData().get(this.getPlayerTakingAction()).playDevelopmentCard(developmentCard);
 		//rest of the effect changes state, so is handled in regular play changeState()
 	}

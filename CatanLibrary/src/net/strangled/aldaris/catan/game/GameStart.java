@@ -13,34 +13,14 @@ public class GameStart extends GameState {
 	public static GameStart getState() {
 		return gs;
 	}
+	
 	@Override
-	public boolean canDoCommand(CatanGame cg, Command command) {
-		//at this point in the game, one can play one settlement and one road on their turn
-		boolean hasPlacedSettlement = false;
-		boolean hasPlacedRoad = false;
-		for (Command c : cg.getCommandHistory()) {
-			if (c.getId() == PlaceSettlement.ID) {
-				hasPlacedSettlement = true;
-			} 
-			else if (c.getId() == PlaceRoad.ID) {
-				hasPlacedRoad = true;
-			}
-			else if (c.getId() == EndTurn.ID) {
-				break;
-			}
-		}
-		if (command.getId() == PlaceRoad.ID) {
-			return !hasPlacedRoad;
-		}
-		else if (command.getId() == PlaceSettlement.ID) {
-			return !hasPlacedSettlement;
-		}
-		else if (command.getId() == EndTurn.ID) {
-			return hasPlacedSettlement && hasPlacedRoad;
-		}
-		else {
-			return false;
-		}
+	public boolean canApply(Command command, CatanGame catanGame) {
+		return command.canApply(catanGame, this);
+	}
+	@Override
+	public void apply(Command command, CatanGame catanGame) {
+		command.apply(catanGame, this);
 		
 	}
 
@@ -72,5 +52,6 @@ public class GameStart extends GameState {
 			}
 		
 	}
+	
 
 }

@@ -9,18 +9,18 @@ import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
 
-public class StealFrom extends Command {
+public class ChoosePlayer extends Command {
 	public static final int ID = 4;
 	private static final Random random = new Random();
 	
 	private final int targetPlayerId;
 	
-	public StealFrom(int playerId, int targetPlayerId) {
+	public ChoosePlayer(int playerId, int targetPlayerId) {
 		super(playerId);
 		this.targetPlayerId = targetPlayerId;
 	}
 
-	public StealFrom(JsonObject jObj) {
+	public ChoosePlayer(JsonObject jObj) {
 		super(jObj);
 		targetPlayerId = jObj.getInt("targetPlayerId");
 	}
@@ -29,9 +29,11 @@ public class StealFrom extends Command {
 	public int getId() {
 		return ID;
 	}
+	
+	
 
-	@Override
-	public void apply(CatanGame cg) {
+	
+	private void apply(CatanGame cg) {
 		ArrayList<Resource> opponentResources = new ArrayList<>(10);
 		var otherPlayer = cg.getPlayerData().get(targetPlayerId);
 		for (Map.Entry<Resource, Integer> entry : otherPlayer.getResources().entrySet()) {
@@ -46,9 +48,9 @@ public class StealFrom extends Command {
 		cg.getPlayerData().get(this.getPlayerTakingAction()).giveResource(singleResource);		
 	}
 
-	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.getPlayerOrder().contains(targetPlayerId) && getPlayerTakingAction() != targetPlayerId && cg.getPlayerData().get(targetPlayerId).getAmountOfResources() > 0;
+	
+	private boolean canApply(CatanGame cg) {
+		return super.isPlayersTurn(cg) && cg.getPlayerOrder().contains(targetPlayerId) && getPlayerTakingAction() != targetPlayerId && cg.getPlayerData().get(targetPlayerId).getAmountOfResources() > 0;
 	}
 
 	@Override

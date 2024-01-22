@@ -1,5 +1,4 @@
 package net.strangled.aldaris.catan.game;
-
 import javax.json.JsonObject;
 
 public class AcceptTrade extends Trade {
@@ -16,14 +15,30 @@ public class AcceptTrade extends Trade {
 	public int getId() {
 		return ID;
 	}
+	
+	private boolean canApply(CatanGame cg) {return isPlayersTurn(cg) && cg.hasBeenProposed(getCatanTrade()) || cg.getBestForeignTrade(getCatanTrade()).isPresent();}
+	private void apply(CatanGame cg) {
+			cg.acceptTrade(getCatanTrade());
+		}
+	
 	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.hasBeenProposed(getCatanTrade());
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {
+		return canApply(cg);
 	}
 	
 	@Override
-	public void apply(CatanGame cg) {
-		cg.acceptTrade(getCatanTrade());
+	public void apply(CatanGame cg, RegularPlayPreRoll g) {
+		apply(cg);
+	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {
+		return canApply(cg);
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll g) {
+		apply(cg);
 	}
 
 }

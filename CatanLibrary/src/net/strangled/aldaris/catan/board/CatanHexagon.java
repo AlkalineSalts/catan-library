@@ -26,7 +26,7 @@ public class CatanHexagon implements JsonSerializable{
 	public CatanHexagon(JsonObject hexagonObject) {
 		x = hexagonObject.getInt("x");
 		y = hexagonObject.getInt("y");
-		resourceType = hexagonObject.isNull(resourceTypeString) ? null : Resource.idToResource(hexagonObject.getInt(resourceTypeString));
+		resourceType = hexagonObject.isNull(resourceTypeString) ? null : Resource.valueOf(hexagonObject.getString(resourceTypeString));
 		collectResourceNumber =  hexagonObject.isNull(collectResourceNumberString) ? null :  hexagonObject.getInt(collectResourceNumberString);
 	}
 	//get mathematical points. These points are on a plane unrelated to the hexagons
@@ -63,7 +63,7 @@ public class CatanHexagon implements JsonSerializable{
 			objectBuilder.addNull(resourceTypeString);
 		}
 		else {
-			objectBuilder.add(resourceTypeString, resourceType.getId());
+			objectBuilder.add(resourceTypeString, resourceType.name());
 		}
 		if (collectResourceNumber == null) {
 			objectBuilder.addNull(collectResourceNumberString);

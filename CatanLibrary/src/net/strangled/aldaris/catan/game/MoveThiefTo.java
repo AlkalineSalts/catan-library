@@ -27,13 +27,13 @@ public class MoveThiefTo extends Command {
 	
 	
 	@Override
-	public void apply(CatanGame cg) {
+	public void apply(CatanGame cg, ThiefMove r) {
 		cg.moveThiefTo(hexagonPoint);
 	}
 
 	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.canMoveThiefHere(hexagonPoint);
+	public boolean canApply(CatanGame cg, ThiefMove r) {
+		return super.isPlayersTurn(cg) && cg.canMoveThiefHere(hexagonPoint);
 	}
 
 	@Override

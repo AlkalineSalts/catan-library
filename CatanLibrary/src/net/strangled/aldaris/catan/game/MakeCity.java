@@ -34,14 +34,34 @@ public class MakeCity extends Command {
 		return ID;
 	}
 
-	@Override
-	public void apply(CatanGame cg) {
+	
+	private void apply(CatanGame cg) {
 		cg.getCatanBoard().canUpgradeToCity(cityPoint, this.getPlayerTakingAction());
 	}
 	
+	
+	private boolean canApply(CatanGame cg) {
+		return super.isPlayersTurn(cg) && cg.getCatanBoard().canUpgradeToCity(cityPoint, getPlayerTakingAction()) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(cityRecipe);
+	}
+	
 	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.getCatanBoard().canUpgradeToCity(cityPoint, getPlayerTakingAction()) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(cityRecipe);
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {
+		return canApply(cg);
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll g) {
+		apply(cg);
+	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {
+		return canApply(cg);
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll g) {
+		apply(cg);
 	}
 
 	@Override

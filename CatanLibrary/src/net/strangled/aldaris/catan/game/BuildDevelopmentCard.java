@@ -42,19 +42,39 @@ public class BuildDevelopmentCard extends Command {
 		return ID;
 	}
 	
-	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(developmentCardRecipe) && cg.hasMoreDevelopmentCards();
+	
+	private boolean canApply(CatanGame cg) {
+		return super.isPlayersTurn(cg) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(developmentCardRecipe) && cg.hasMoreDevelopmentCards();
 	}
 	
-	@Override
-	public void apply(CatanGame cg) {
+	
+	private void apply(CatanGame cg) {
 		var player = cg.getPlayerData().get(this.getPlayerTakingAction());
 		player.removeTheseResources(developmentCardRecipe);
 		if (builtDevelopmentCard == null) {
 			builtDevelopmentCard = cg.getRandomDevelopmentCard();
 		}
 		player.giveDevelopmentCard(builtDevelopmentCard);
+	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {
+		return canApply(cg);
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll g) {
+		apply(cg);
+	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {
+		return canApply(cg);
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll g) {
+		apply(cg);
 	}
 
 	@Override

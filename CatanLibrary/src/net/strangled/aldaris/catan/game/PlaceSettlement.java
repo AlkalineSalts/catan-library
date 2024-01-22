@@ -34,15 +34,44 @@ public class PlaceSettlement extends Command {
 		return ID;
 	}
 
-	@Override
-	public void apply(CatanGame cg) {
+	
+	private void apply(CatanGame cg) {
 		cg.getCatanBoard().placeSettlement(placementPoint, getPlayerTakingAction());
 	}
+	
+	@Override
+	public void apply(CatanGame cg, GameStart r) {apply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll r) {apply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll r) {apply(cg);}
 
 	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(settlementRecipe) && cg.getCatanBoard().canPlaceSettlement(placementPoint, this.getPlayerTakingAction());
+	public boolean canApply(CatanGame cg, GameStart r) {
+		return canPlaceNoCost(cg);
 	}
+	
+	@Override 
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll r) {
+		return canPlaceWithCost(cg);
+	}
+	
+	@Override 
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll r) {
+		return canPlaceWithCost(cg);
+	}
+	
+	
+	
+	
+	private boolean canPlaceNoCost(CatanGame cg) {
+		return this.isPlayersTurn(cg) && cg.getCatanBoard().canPlaceSettlement(placementPoint, this.getPlayerTakingAction());
+	}
+	
+	private boolean canPlaceWithCost(CatanGame cg) {
+		return canPlaceNoCost(cg) && cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(settlementRecipe);
+	}
+	
 
 	@Override
 	public void _toJson(JsonObjectBuilder builder) {

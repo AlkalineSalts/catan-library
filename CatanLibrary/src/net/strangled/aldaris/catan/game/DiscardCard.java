@@ -24,7 +24,7 @@ public class DiscardCard extends Command {
 
 	public DiscardCard(JsonObject jObj) {
 		super(jObj);
-		theResource = Resource.idToResource(jObj.getInt("resource"));
+		theResource = Resource.valueOf(jObj.getString("resource"));
 		resourceMap = new EnumMap<>(Resource.class);
 		resourceMap.put(theResource, 1);
 	}
@@ -34,19 +34,22 @@ public class DiscardCard extends Command {
 		return ID;
 	}
 
-	@Override
-	public void apply(CatanGame cg) {
+	
+	public void apply(CatanGame cg, ThiefSteal r) {
 		cg.getPlayerData().get(this.getPlayerTakingAction()).removeTheseResources(resourceMap);
 	}
 
-	@Override
-	public boolean canApply(CatanGame cg) {
+	
+	public boolean canApply(CatanGame cg, ThiefSteal r) {
 		return cg.getPlayerData().get(this.getPlayerTakingAction()).hasTheseResources(resourceMap);
+		//TODO: Make sure to check that they can only discard up to half of their hand
 	}
+	
+	
 
 	@Override
 	public void _toJson(JsonObjectBuilder builder) {
-		builder.add("resource", theResource.getId());
+		builder.add("resource", theResource.name());
 	}
 
 }

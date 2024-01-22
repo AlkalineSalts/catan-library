@@ -15,10 +15,48 @@ public abstract class Command implements JsonSerializable {
 		playerId = jObj.getInt("playerTakingAction");
 	}
 	public abstract int getId();
-	public abstract void apply(CatanGame cg);
-	public boolean canApply(CatanGame cg) {
-		return playerId == cg.getCurrentPlayer();
+	
+	protected final boolean isPlayersTurn(CatanGame g) {
+		return playerId == g.getCurrentPlayer().intValue();
 	}
+	
+	
+	public boolean canApply(CatanGame cg, GameStart g) {return false;}
+	
+	public boolean canApply(CatanGame cg, GameEnded g) {return false;}
+	
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {return false;}
+	
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {return false;}
+	
+	public boolean canApply(CatanGame cg, ThiefSteal g) {return false;}
+	
+	public boolean canApply(CatanGame cg, RoadBuilding r) {return false;}
+	
+	public boolean canApply(CatanGame cg, Monopoly r) {return false;}
+	
+	public boolean canApply(CatanGame cg, YearOfPlenty r) {return false;}
+	
+	public boolean canApply(CatanGame cg, ThiefMove r) {return false;}
+	
+	
+	public void apply(CatanGame cg, GameStart g) {}
+	
+	public void apply(CatanGame cg, GameEnded g) {}
+	
+	public void apply(CatanGame cg, RegularPlayPreRoll g) {}
+	
+	public void apply(CatanGame cg, RegularPlayPostRoll g) {}
+	
+	public void apply(CatanGame cg, ThiefSteal g) {}
+	
+	public void apply(CatanGame cg, RoadBuilding g) {}
+	
+	public void apply(CatanGame cg, Monopoly r) {}
+	
+	public void apply(CatanGame cg, YearOfPlenty r) {}
+	
+	public void apply(CatanGame cg, ThiefMove r) {}
 	
 	//use the template to complete json object for subclasses
 	public abstract void _toJson(JsonObjectBuilder builder); //template design pattern
@@ -35,4 +73,5 @@ public abstract class Command implements JsonSerializable {
 		_toJson(builder);
 		return builder;
 	}
+	
 }

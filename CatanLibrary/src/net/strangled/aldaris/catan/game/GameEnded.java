@@ -16,15 +16,19 @@ public class GameEnded extends GameState {
 	}
 
 	@Override
-	public boolean canDoCommand(CatanGame cg, Command command) {
-		// No commands can be entered, game is over
-		return false;
+	public boolean canApply(Command command, CatanGame catanGame) {
+		return command.canApply(catanGame, this);
+	}
+	@Override
+	public void apply(Command command, CatanGame catanGame) {
+		command.apply(catanGame, this);
 	}
 
 	@Override
 	public GameState getNextState(CatanGame cg) {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
+	
 
 }

@@ -17,12 +17,23 @@ public class ProposeTrade extends Trade {
 	}
 	
 	@Override
-	public void apply(CatanGame cg) {
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll r) {return canApply(cg);}
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll r) {return canApply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll r) {apply(cg);}
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll r) {apply(cg);}
+	
+	
+	private void apply(CatanGame cg) {
 		cg.addTrade(getCatanTrade());
 	}
 
-	@Override
-	public boolean canApply(CatanGame cg) {
-		return super.canApply(cg) && cg.isValidTrade(getCatanTrade()); 
+	
+	private boolean canApply(CatanGame cg) {
+		var trade = super.getCatanTrade();
+		return  (trade.issuingPlayer() == cg.getCurrentPlayer().intValue() || trade.recipient() == cg.getCurrentPlayer().intValue())
+			&& cg.isValidTrade(getCatanTrade()); 
 	}
 }

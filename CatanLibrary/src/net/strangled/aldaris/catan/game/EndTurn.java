@@ -18,10 +18,24 @@ public class EndTurn extends Command {
 	}
 
 	@Override
-	public void apply(CatanGame cg) {
-		//no need to implement, state will handle that
+	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {
+		return true;
 	}
-
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPreRoll g) {
+		//no need to implement, state will change accordingly
+	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {
+		return true;
+	}
+	
+	@Override
+	public void apply(CatanGame cg, RegularPlayPostRoll g) {
+		//no need to implement, state will change accordingly
+	}
 	@Override
 	public void _toJson(JsonObjectBuilder builder) {
 		//no need to implement

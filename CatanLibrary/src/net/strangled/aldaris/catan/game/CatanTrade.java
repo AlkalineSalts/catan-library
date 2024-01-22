@@ -9,10 +9,10 @@ import javax.json.JsonObjectBuilder;
 import net.strangled.aldaris.catan.JsonSerializable;
 import net.strangled.aldaris.catan.Resource;
 import net.strangled.aldaris.catan.Util;
-
+	
 public record CatanTrade(int issuingPlayer, Map<Resource, Integer> forThis, int recipient, Map<Resource, Integer> willGiveThis) implements JsonSerializable{
 
-	
+	public static final int NULL_PLAYER = Integer.MIN_VALUE;
 	@Override
 	public int hashCode() {
 		return issuingPlayer * 10 + recipient;
@@ -47,7 +47,9 @@ public record CatanTrade(int issuingPlayer, Map<Resource, Integer> forThis, int 
 		return true;
 }
 
-
+	public boolean isForeignTrade() {
+		return recipient == CatanTrade.NULL_PLAYER && willGiveThis.size() == 1 && forThis.size() == 1;
+	}
 
 	@Override
 	public JsonObjectBuilder toJson() {
