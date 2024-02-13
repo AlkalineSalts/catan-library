@@ -1,4 +1,4 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,6 +8,9 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.Player;
 
 public class ChoosePlayer extends Command {
 	public static final int ID = 4;
@@ -33,7 +36,7 @@ public class ChoosePlayer extends Command {
 	
 
 	
-	private void apply(CatanGame cg) {
+	public void apply(CatanGame cg) {
 		ArrayList<Resource> opponentResources = new ArrayList<>(10);
 		var otherPlayer = cg.getPlayerData().get(targetPlayerId);
 		for (Map.Entry<Resource, Integer> entry : otherPlayer.getResources().entrySet()) {
@@ -44,12 +47,12 @@ public class ChoosePlayer extends Command {
 		}
 		var singleResource = opponentResources.get(random.nextInt(opponentResources.size()));
 		var stealingResource = Player.packageResources(singleResource);
-		otherPlayer.removeTheseResources(stealingResource);
-		cg.getPlayerData().get(this.getPlayerTakingAction()).giveResource(singleResource);		
+		removeTheseResources(otherPlayer, stealingResource);
+		giveResource(cg.getPlayerData().get(this.getPlayerTakingAction()), singleResource);		
 	}
 
 	
-	private boolean canApply(CatanGame cg) {
+	public boolean canApply(CatanGame cg) {
 		return super.isPlayersTurn(cg) && cg.getPlayerOrder().contains(targetPlayerId) && getPlayerTakingAction() != targetPlayerId && cg.getPlayerData().get(targetPlayerId).getAmountOfResources() > 0;
 	}
 

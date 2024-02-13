@@ -2,6 +2,20 @@ package net.strangled.aldaris.catan.game;
 
 
 import javax.json.JsonObject;
+
+import net.strangled.aldaris.catan.game.command.AcceptTrade;
+import net.strangled.aldaris.catan.game.command.BuildDevelopmentCard;
+import net.strangled.aldaris.catan.game.command.ChoosePlayer;
+import net.strangled.aldaris.catan.game.command.ChooseResource;
+import net.strangled.aldaris.catan.game.command.DiscardCard;
+import net.strangled.aldaris.catan.game.command.EndTurn;
+import net.strangled.aldaris.catan.game.command.MakeCity;
+import net.strangled.aldaris.catan.game.command.MoveThiefTo;
+import net.strangled.aldaris.catan.game.command.PlaceRoad;
+import net.strangled.aldaris.catan.game.command.PlaceSettlement;
+import net.strangled.aldaris.catan.game.command.PlayDevelopmentCard;
+import net.strangled.aldaris.catan.game.command.ProposeTrade;
+
 import java.util.HashMap;
 import java.util.function.Function;
 

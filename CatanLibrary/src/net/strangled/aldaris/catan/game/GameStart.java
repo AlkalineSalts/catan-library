@@ -3,6 +3,7 @@ package net.strangled.aldaris.catan.game;
 import java.util.HashMap;
 
 import net.strangled.aldaris.catan.game.CatanGame.GameState;
+import net.strangled.aldaris.catan.game.command.EndTurn;
 
 public class GameStart extends GameState {
 	public static final int ID = 1;

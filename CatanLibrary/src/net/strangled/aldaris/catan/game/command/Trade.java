@@ -1,12 +1,11 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
-import java.util.Map;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import net.strangled.aldaris.catan.Resource;
-import net.strangled.aldaris.catan.Util;
+import net.strangled.aldaris.catan.game.CatanTrade;
+import net.strangled.aldaris.catan.game.Command;
 
 public abstract class Trade extends Command {
 	

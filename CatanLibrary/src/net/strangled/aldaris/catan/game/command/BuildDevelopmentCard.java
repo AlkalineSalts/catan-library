@@ -1,5 +1,4 @@
-package net.strangled.aldaris.catan.game;
-
+package net.strangled.aldaris.catan.game.command;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -8,6 +7,8 @@ import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.DevelopmentCard;
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.*;
+import net.strangled.aldaris.catan.game.Command;
 
 public class BuildDevelopmentCard extends Command {
 	public static final int ID = 10;
@@ -50,11 +51,11 @@ public class BuildDevelopmentCard extends Command {
 	
 	private void apply(CatanGame cg) {
 		var player = cg.getPlayerData().get(this.getPlayerTakingAction());
-		player.removeTheseResources(developmentCardRecipe);
+		removeTheseResources(player, developmentCardRecipe);
 		if (builtDevelopmentCard == null) {
-			builtDevelopmentCard = cg.getRandomDevelopmentCard();
+			builtDevelopmentCard = getRandomDevelopmentCard(cg);
 		}
-		player.giveDevelopmentCard(builtDevelopmentCard);
+		giveDevelopmentCard(player, builtDevelopmentCard);
 	}
 	
 	@Override

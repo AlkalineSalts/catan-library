@@ -1,10 +1,15 @@
 package net.strangled.aldaris.catan.game;
 
+import java.util.Map;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import net.strangled.aldaris.catan.DevelopmentCard;
 import net.strangled.aldaris.catan.JsonSerializable;
+import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.math.Point;
 
 public abstract class Command implements JsonSerializable {
 	private final int playerId;
@@ -64,6 +69,41 @@ public abstract class Command implements JsonSerializable {
 	public int getPlayerTakingAction() {
 		return playerId;
 	}
+	
+	//use these methods to mutate the state of the catan game, the purpose of having these here are to protect anything outside
+	//of a command from mutatuing the game state. These are proxy methods for the mutators on the catan game
+	protected final void moveThiefTo(CatanGame cg, Point point) {
+		cg.moveThiefTo(point);
+	}
+	protected final void addTrade(CatanGame cg, CatanTrade trade) {
+		cg.addTrade(trade);
+	}
+	protected final DevelopmentCard getRandomDevelopmentCard(CatanGame cg) {
+		return cg.getRandomDevelopmentCard();
+	}
+	
+	//same idea for players, players sshould not be modifiable outside of commands
+	
+	protected final void giveDevelopmentCard(Player player, DevelopmentCard d) {
+		player.giveDevelopmentCard(d);
+	}
+	protected final void playDevelopmentCard(Player player, DevelopmentCard d) {
+		player.playDevelopmentCard(d);
+	}
+	
+	protected final void giveResource(Player player, Resource r) {
+		player.giveResource(r);
+	}
+	
+	protected final void removeTheseResources(Player player, Map<Resource, Integer> resourcesAmount) {
+		player.removeTheseResources(resourcesAmount);
+	}
+	
+	protected final void giveTheseResource(Player player, Map<Resource, Integer> resourcesAmount) {
+		player.giveTheseResource(resourcesAmount);
+	}
+
+	
 	
 	@Override
 	public JsonObjectBuilder toJson() {

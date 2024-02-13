@@ -1,12 +1,12 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import java.util.EnumMap;
-import java.util.HashMap;
-
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.*;
+import net.strangled.aldaris.catan.game.Command;
 
 public class DiscardCard extends Command {
 	public static final int ID = -100;
@@ -36,7 +36,7 @@ public class DiscardCard extends Command {
 
 	
 	public void apply(CatanGame cg, ThiefSteal r) {
-		cg.getPlayerData().get(this.getPlayerTakingAction()).removeTheseResources(resourceMap);
+		removeTheseResources(cg.getPlayerData().get(this.getPlayerTakingAction()), resourceMap);
 	}
 
 	

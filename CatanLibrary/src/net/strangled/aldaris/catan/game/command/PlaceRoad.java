@@ -1,4 +1,4 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -7,6 +7,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.*;
+import net.strangled.aldaris.catan.game.Command;
 import net.strangled.aldaris.catan.math.Line;
 
 public class PlaceRoad extends Command {
@@ -58,7 +60,7 @@ public class PlaceRoad extends Command {
 	
 	
 	private void removeResources(CatanGame cg) {
-		cg.getPlayerData().get(this.getPlayerTakingAction()).removeTheseResources(woodRecipe);
+		removeTheseResources(cg.getPlayerData().get(this.getPlayerTakingAction()),woodRecipe);
 	}
 	
 	private void apply(CatanGame cg) {

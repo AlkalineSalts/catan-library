@@ -1,8 +1,11 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.ThiefMove;
 import net.strangled.aldaris.catan.math.Point;
 
 public class MoveThiefTo extends Command {
@@ -28,7 +31,7 @@ public class MoveThiefTo extends Command {
 	
 	@Override
 	public void apply(CatanGame cg, ThiefMove r) {
-		cg.moveThiefTo(hexagonPoint);
+		moveThiefTo(cg, hexagonPoint);
 	}
 
 	@Override

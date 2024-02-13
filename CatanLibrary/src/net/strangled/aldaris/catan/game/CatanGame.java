@@ -19,6 +19,8 @@ import net.strangled.aldaris.catan.DevelopmentCard;
 import net.strangled.aldaris.catan.JsonSerializable;
 import net.strangled.aldaris.catan.Resource;
 import net.strangled.aldaris.catan.board.CatanBoard;
+import net.strangled.aldaris.catan.game.command.EndTurn;
+import net.strangled.aldaris.catan.game.command.RollDice;
 import net.strangled.aldaris.catan.math.Line;
 import net.strangled.aldaris.catan.math.Point;
 
@@ -71,7 +73,7 @@ public class CatanGame implements JsonSerializable {
 		return (point != null && !point.equals(thiefOn) && catanBoard.hexagonExists(point));
 	}
 	
-	void moveThiefTo(Point point) {
+	protected void moveThiefTo(Point point) {
 		thiefOn = point;
 	}
 	
@@ -81,7 +83,7 @@ public class CatanGame implements JsonSerializable {
 	public boolean hasMoreDevelopmentCards() {
 		return currentPlayerIndex < developmentCardDeck.size();
 	}
-	DevelopmentCard getRandomDevelopmentCard() {
+	protected DevelopmentCard getRandomDevelopmentCard() {
 		if (developmentCardPosition == developmentCardDeck.size()) {
 			throw new IllegalStateException("cannot draw from an empty development card deck");
 		}

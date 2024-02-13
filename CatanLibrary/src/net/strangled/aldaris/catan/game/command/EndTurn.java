@@ -1,7 +1,11 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.RegularPlayPostRoll;
 
 public class EndTurn extends Command {
 	public EndTurn(int playerId) {
@@ -17,15 +21,7 @@ public class EndTurn extends Command {
 		return ID;
 	}
 
-	@Override
-	public boolean canApply(CatanGame cg, RegularPlayPreRoll g) {
-		return true;
-	}
 	
-	@Override
-	public void apply(CatanGame cg, RegularPlayPreRoll g) {
-		//no need to implement, state will change accordingly
-	}
 	
 	@Override
 	public boolean canApply(CatanGame cg, RegularPlayPostRoll g) {

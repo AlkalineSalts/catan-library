@@ -1,9 +1,12 @@
-package net.strangled.aldaris.catan.game;
-
+package net.strangled.aldaris.catan.game.command;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.DevelopmentCard;
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.RegularPlayPostRoll;
+import net.strangled.aldaris.catan.game.RegularPlayPreRoll;
 
 public class PlayDevelopmentCard extends Command {
 	public static final int ID = 3;
@@ -58,7 +61,7 @@ public class PlayDevelopmentCard extends Command {
 	
 	
 	private void apply(CatanGame cg) {
-		cg.getPlayerData().get(this.getPlayerTakingAction()).playDevelopmentCard(developmentCard);
+		playDevelopmentCard(cg.getPlayerData().get(this.getPlayerTakingAction()),developmentCard);
 		//rest of the effect changes state, so is handled in regular play changeState()
 	}
 

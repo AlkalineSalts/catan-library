@@ -1,4 +1,4 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -7,6 +7,11 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.Monopoly;
+import net.strangled.aldaris.catan.game.Player;
+import net.strangled.aldaris.catan.game.YearOfPlenty;
 
 public class ChooseResource extends Command {
 	public static final int ID = 365;
@@ -32,7 +37,7 @@ public class ChooseResource extends Command {
 	}
 	@Override
 	public void apply(CatanGame cg, YearOfPlenty r) {
-		cg.getPlayerData().get(getPlayerTakingAction()).giveResource(getResource());
+		giveResource(cg.getPlayerData().get(getPlayerTakingAction()), getResource());
 	}
 	
 	@Override
@@ -50,13 +55,13 @@ public class ChooseResource extends Command {
 			 //removes all of this resource from them
 			EnumMap<Resource, Integer> map = new EnumMap<>(Resource.class);
 			map.put(getResource(), theyHaveThisMany);
-			entry.getValue().removeTheseResources(map);
+			removeTheseResources(entry.getValue(), map);
 		}
 		
 		//gives the monopoly user these resources
 		EnumMap<Resource, Integer> map = new EnumMap<>(Resource.class);
 		map.put(getResource(), numberOfResource);
-		cg.getPlayerData().get(this.getPlayerTakingAction()).giveTheseResource(map);
+		giveTheseResource(cg.getPlayerData().get(this.getPlayerTakingAction()), map);
 
 	}
 

@@ -3,6 +3,7 @@ package net.strangled.aldaris.catan.game;
 import java.util.List;
 
 import net.strangled.aldaris.catan.game.CatanGame.GameState;
+import net.strangled.aldaris.catan.game.command.RollDice;
 
 public class RegularPlayPreRoll extends GameState {
 	public static final int ID = 2;

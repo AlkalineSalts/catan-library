@@ -1,13 +1,14 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
+import net.strangled.aldaris.catan.game.*;
+import net.strangled.aldaris.catan.game.Command;
 import net.strangled.aldaris.catan.math.Point;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MakeCity extends Command {

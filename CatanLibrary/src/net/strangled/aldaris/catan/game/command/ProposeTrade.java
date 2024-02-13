@@ -1,12 +1,17 @@
-package net.strangled.aldaris.catan.game;
+package net.strangled.aldaris.catan.game.command;
 
 import javax.json.JsonObject;
 
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.CatanTrade;
+import net.strangled.aldaris.catan.game.RegularPlayPostRoll;
+import net.strangled.aldaris.catan.game.RegularPlayPreRoll;
+
 public class ProposeTrade extends Trade {
-	protected ProposeTrade(CatanTrade trade) {
+	public ProposeTrade(CatanTrade trade) {
 		super(trade);
 	}
-	protected ProposeTrade(JsonObject o) {
+	public ProposeTrade(JsonObject o) {
 		super(o);
 	}
 
@@ -27,7 +32,7 @@ public class ProposeTrade extends Trade {
 	
 	
 	private void apply(CatanGame cg) {
-		cg.addTrade(getCatanTrade());
+		addTrade(cg, getCatanTrade());
 	}
 
 	

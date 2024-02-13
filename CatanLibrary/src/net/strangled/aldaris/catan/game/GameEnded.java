@@ -11,7 +11,6 @@ public class GameEnded extends GameState {
 	}
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
 		return ID;
 	}
 
@@ -26,7 +25,6 @@ public class GameEnded extends GameState {
 
 	@Override
 	public GameState getNextState(CatanGame cg) {
-		// TODO Auto-generated method stub
 		return this;
 	}
 	

@@ -1,12 +1,14 @@
-package net.strangled.aldaris.catan.game;
-import java.util.Arrays;
-import java.util.List;
+package net.strangled.aldaris.catan.game.command;
+
 import java.util.Random;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.board.CatanHexagon;
 import net.strangled.aldaris.catan.board.CatanPoint;
+import net.strangled.aldaris.catan.game.CatanGame;
+import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.RegularPlayPreRoll;
 import net.strangled.aldaris.catan.math.Point;
 
 public class RollDice extends Command {
@@ -55,9 +57,9 @@ public class RollDice extends Command {
 				CatanPoint catanPoint = cg.getCatanBoard().getPointToDataPoint().get(mp);
 				if (catanPoint.hasOwner()) {
 					var owner = cg.getPlayerData().get(catanPoint.getOwner());
-					owner.giveResource(hexagon.getResourceType());
+					giveResource(owner, hexagon.getResourceType());
 					if (catanPoint.isCity()) {
-						owner.giveResource(hexagon.getResourceType());
+						giveResource(owner, hexagon.getResourceType());
 					}
 				}
 			}
