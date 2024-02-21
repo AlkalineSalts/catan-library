@@ -30,12 +30,7 @@ public class RoadBuilding extends GameState {
 	@Override
 	public GameState getNextState(CatanGame cg) {
 		if (haveTwoRoadsBeenBuilt(cg)) {
-			if (cg.haveDiceRolledSinceLastEndTurn()) {
-				return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);
-			}
-			else {
-				return GameStateFactory.get().getGameState(RegularPlayPreRoll.ID);
-			}
+			return super.getRegularGameState(cg);
 		}
 		else {
 			return this;

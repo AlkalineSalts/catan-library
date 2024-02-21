@@ -1,5 +1,7 @@
 package net.strangled.aldaris.catan.board;
 
+import java.util.Optional;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -46,8 +48,8 @@ public class CatanHexagon implements JsonSerializable{
 	public int getCollectResourceNumber() {
 		return collectResourceNumber;
 	}
-	public Resource getResourceType() {
-		return resourceType;
+	public Optional<Resource> getResourceType() {
+		return Optional.ofNullable(resourceType);
 	}
 	public int getX() {
 		return x;

@@ -15,11 +15,7 @@ public class ThiefMove extends GameState {
 	public GameState getNextState(CatanGame cg) {
 		var history = cg.getCommandsDoneThisTurn();
 		if (history.size() > 1 && history.get(0).getId() == MoveThiefTo.ID) {
-			if (history.stream().anyMatch(command -> command.getId() == RollDice.ID)) {
-				return RegularPlayPostRoll.getState();
-			} else {
-				return RegularPlayPreRoll.getState();
-			}
+			return ThiefSteal.getState();
 		}
 		return this;
 	}

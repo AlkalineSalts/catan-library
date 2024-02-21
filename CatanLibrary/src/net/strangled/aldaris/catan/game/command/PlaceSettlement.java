@@ -40,17 +40,28 @@ public class PlaceSettlement extends Command {
 	private void apply(CatanGame cg) {
 		cg.getCatanBoard().placeSettlement(placementPoint, getPlayerTakingAction());
 	}
+	private void removeResources(CatanGame cg) {
+		super.removeTheseResources(cg.getPlayerData().get(getPlayerTakingAction()), settlementRecipe);
+	}
+	
+	private boolean hasPlacedSettlementThisTurn(CatanGame cg) {
+		var commands = cg.getCommandsDoneThisTurn();
+		for (Command c : commands) {
+			if (c.getId() == PlaceSettlement.ID && c.getPlayerTakingAction() == this.getPlayerTakingAction()) {return true;}
+		}
+		return false;
+	}
 	
 	@Override
 	public void apply(CatanGame cg, GameStart r) {apply(cg);}
 	@Override
-	public void apply(CatanGame cg, RegularPlayPreRoll r) {apply(cg);}
+	public void apply(CatanGame cg, RegularPlayPreRoll r) {apply(cg); removeResources(cg);}
 	@Override
-	public void apply(CatanGame cg, RegularPlayPostRoll r) {apply(cg);}
-
+	public void apply(CatanGame cg, RegularPlayPostRoll r) {apply(cg); removeResources(cg);}
+	
 	@Override
 	public boolean canApply(CatanGame cg, GameStart r) {
-		return canPlaceNoCost(cg);
+		return canPlaceNoCost(cg) && !hasPlacedSettlementThisTurn(cg);
 	}
 	
 	@Override 

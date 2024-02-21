@@ -17,11 +17,7 @@ public class Monopoly extends GameState {
 	public GameState getNextState(CatanGame cg) {
 		var history = cg.getCommandsDoneThisTurn();
 		if (!history.isEmpty() && history.get(0).getId() == ChooseResource.ID) {
-			if (history.stream().anyMatch(command -> command.getId() == RollDice.ID)) {
-				return RegularPlayPostRoll.getState();
-			} else {
-				return RegularPlayPreRoll.getState();
-			}
+			return super.getRegularGameState(cg);
 		}
 		return this;
 	}

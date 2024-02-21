@@ -43,12 +43,14 @@ public class GameStart extends GameState {
 			int numberOfEndTurns = 0;
 			for (Command c : cg.getCommandHistory()) {if (c.getId() == EndTurn.ID) numberOfEndTurns++;}
 			
-			cg.setCurrentPlayerIndex(getNextTurnPlayerIndex[numberOfEndTurns]);
+			
 			if (numberOfEndTurns == getNextTurnPlayerIndex.length) {
+				cg.setCurrentPlayerIndex(0);
 				cg.getCatanBoard().startGame();
 				return GameStateFactory.get().getGameState(RegularPlayPreRoll.ID);
 			}
 			else {
+				cg.setCurrentPlayerIndex(getNextTurnPlayerIndex[numberOfEndTurns]);
 				return this;
 			}
 		

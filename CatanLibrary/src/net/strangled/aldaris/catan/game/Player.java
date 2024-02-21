@@ -68,8 +68,13 @@ public class Player implements JsonSerializable {
 	protected void giveDevelopmentCard(DevelopmentCard d) {
 		developmentCards.compute(d, (key, value) -> value + 1);
 	}
+	
+	public boolean hasDevelopmentCard(DevelopmentCard d) {
+		return developmentCards.get(d) > 1;
+	}
+	
 	protected void playDevelopmentCard(DevelopmentCard d) {
-		if (developmentCards.get(d) > 1) {
+		if (hasDevelopmentCard(d)) {
 			throw new IllegalStateException("cannot play a card you don't have");
 		}
 		developmentCards.compute(d, (key, value) -> value - 1);

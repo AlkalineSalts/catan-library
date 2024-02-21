@@ -57,10 +57,12 @@ public class RollDice extends Command {
 				CatanPoint catanPoint = cg.getCatanBoard().getPointToDataPoint().get(mp);
 				if (catanPoint.hasOwner()) {
 					var owner = cg.getPlayerData().get(catanPoint.getOwner());
-					giveResource(owner, hexagon.getResourceType());
+					hexagon.getResourceType().ifPresent(resource -> {
+					giveResource(owner, resource);
 					if (catanPoint.isCity()) {
-						giveResource(owner, hexagon.getResourceType());
+						giveResource(owner, resource);
 					}
+					});
 				}
 			}
 		}

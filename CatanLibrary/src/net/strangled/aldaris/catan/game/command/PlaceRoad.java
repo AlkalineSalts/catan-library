@@ -8,7 +8,6 @@ import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.Resource;
 import net.strangled.aldaris.catan.game.*;
-import net.strangled.aldaris.catan.game.Command;
 import net.strangled.aldaris.catan.math.Line;
 
 public class PlaceRoad extends Command {
@@ -54,13 +53,21 @@ public class PlaceRoad extends Command {
 	@Override
 	public void apply(CatanGame cg, GameStart r) {apply(cg);}
 	@Override
-	public boolean canApply(CatanGame cg, GameStart r) {return canApplyNoCost(cg);}
+	public boolean canApply(CatanGame cg, GameStart r) {return canApplyNoCost(cg) && !hasPlacedRoadThisTurn(cg);}
 	
 	
 	
 	
 	private void removeResources(CatanGame cg) {
 		removeTheseResources(cg.getPlayerData().get(this.getPlayerTakingAction()),woodRecipe);
+	}
+	
+	private boolean hasPlacedRoadThisTurn(CatanGame cg) {
+		var commands = cg.getCommandsDoneThisTurn();
+		for (Command c : commands) {
+			if (c.getId() == PlaceRoad.ID && c.getPlayerTakingAction() == this.getPlayerTakingAction()) {return true;}
+		}
+		return false;
 	}
 	
 	private void apply(CatanGame cg) {

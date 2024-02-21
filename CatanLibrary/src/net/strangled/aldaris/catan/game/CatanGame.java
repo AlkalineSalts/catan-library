@@ -1,7 +1,6 @@
 package net.strangled.aldaris.catan.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +18,15 @@ import net.strangled.aldaris.catan.DevelopmentCard;
 import net.strangled.aldaris.catan.JsonSerializable;
 import net.strangled.aldaris.catan.Resource;
 import net.strangled.aldaris.catan.board.CatanBoard;
+import net.strangled.aldaris.catan.board.CatanHexagon;
+import net.strangled.aldaris.catan.board.CatanPoint;
 import net.strangled.aldaris.catan.game.command.EndTurn;
 import net.strangled.aldaris.catan.game.command.RollDice;
 import net.strangled.aldaris.catan.math.Line;
 import net.strangled.aldaris.catan.math.Point;
 
 public class CatanGame implements JsonSerializable {
-	private static final LinkedList<DevelopmentCard> defaultCardList = new LinkedList<>();
+	private static final ArrayList<DevelopmentCard> defaultCardList = new ArrayList<>(25);
 	static {
 		for (int i = 0; i < 14; i++) {
 			defaultCardList.add(DevelopmentCard.KNIGHT);
@@ -36,6 +37,7 @@ public class CatanGame implements JsonSerializable {
 			}
 			if (i < 5) {defaultCardList.add(DevelopmentCard.VICTORY_POINT);}
 		}
+		Collections.shuffle(defaultCardList);
 	}
 	public static List<DevelopmentCard> getDefaultCards() {return (List<DevelopmentCard>) defaultCardList.clone();}
 	private static final Map.Entry<Resource, Integer> defaultForeignTrade = new SimpleImmutableEntry<>(null, 4);
@@ -63,10 +65,15 @@ public class CatanGame implements JsonSerializable {
 		proposedTrades = new HashSet<>();
 		playerOrder = new ArrayList<>();
 		playerData = new HashMap<>();
+		gameState = GameStart.getState();
 		for (Player player : players) {
 			playerOrder.add(player.getId());
 			playerData.put(player.getId(), player);
 		}		
+		//set the thief on the correct game tile
+		for (CatanHexagon catanHexagon : board.getCoordinateToDataHexagon().values()) {
+			catanHexagon.getResourceType().ifPresentOrElse(resource -> {}, () -> thiefOn = new Point(catanHexagon.getX(), catanHexagon.getY()));
+		}
 	}
 	
 	public boolean canMoveThiefHere(Point point) {
@@ -224,15 +231,18 @@ public class CatanGame implements JsonSerializable {
 		history.add(0, command);
 		gameState = gameState.getNextState(this);
 	}
+	public boolean canProcessCommand(Command command) {
+		return gameState.canApply(command, this);
+	}
+	
 	//returns if the command executed sucessfully or not
-	public boolean processCommand(Command command) {
+	public void processCommand(Command command) {
 		boolean canDoCommand = gameState.canApply(command, this);
 		//the first gameState checks if the command can be run now (e.g. it is the correct players turn, correct game state)
 		//the second command check checks if the command parameters are valid (is this a valid point, far enough away from others)
 		if (canDoCommand) {
 			executeCommand(command);
 		}
-		return canDoCommand;
 		
 	}
 	
@@ -252,7 +262,15 @@ public class CatanGame implements JsonSerializable {
 				return getId() == otherBoardState.getId();
 			}
 		}
-		
+		//this method is a utility method for getNextState to easily return the state to it's pre or post roll period respectively
+		protected final GameState getRegularGameState(CatanGame cg) {
+			if (cg.haveDiceRolledSinceLastEndTurn()) {
+				return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);
+			}
+			else {
+				return GameStateFactory.get().getGameState(RegularPlayPreRoll.ID);
+			}
+		}
 	}
 	
 
