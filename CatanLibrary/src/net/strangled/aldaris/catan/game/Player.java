@@ -94,7 +94,7 @@ public class Player implements JsonSerializable {
 		}
 	}
 	
-	protected void giveTheseResource(Map<Resource, Integer> resourcesAmount) {
+	protected void giveTheseResources(Map<Resource, Integer> resourcesAmount) {
 		for (Map.Entry<Resource, Integer> entry : resourcesAmount.entrySet()) {
 			resources.compute(entry.getKey(), (key, value) -> value + entry.getValue());
 		}

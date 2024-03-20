@@ -32,7 +32,7 @@ public class RollDice extends Command {
 		
 	}
 	
-	public Integer getRolledNumber() {
+	public int getRolledNumber() {
 		return rolledNumber;
 	}
 	
@@ -48,21 +48,28 @@ public class RollDice extends Command {
 
 	@Override
 	public void apply(CatanGame cg, RegularPlayPreRoll r) {
-		//this massive one liner gets hexagons with the given number
-		var catanHexagons = cg.getCatanBoard().getCoordinateToDataHexagon().values().stream().filter(hexagon -> hexagon.getCollectResourceNumber() == rolledNumber).toList();
-		//gives each player their resources, going over all the points
-		//players get one per settlement and two per city
-		for (CatanHexagon hexagon : catanHexagons) {
-			for (Point mp : hexagon.getMathematicalPoints()) {
-				CatanPoint catanPoint = cg.getCatanBoard().getPointToDataPoint().get(mp);
-				if (catanPoint.hasOwner()) {
-					var owner = cg.getPlayerData().get(catanPoint.getOwner());
-					hexagon.getResourceType().ifPresent(resource -> {
-					giveResource(owner, resource);
-					if (catanPoint.isCity()) {
+		
+		if (rolledNumber == 7) {
+			
+			
+		}
+		else {
+			//this one liner gets hexagons with the given number w/o the thief on it
+			var catanHexagons = cg.getCatanBoard().getCoordinateToDataHexagon().values().stream().filter(hexagon -> hexagon.getCollectResourceNumber() == rolledNumber).filter(hexagon -> !hexagon.getPoint().equals(cg.getThiefOn())).toList();
+			//gives each player their resources, going over all the points
+			//players get one per settlement and two per city
+			for (CatanHexagon hexagon : catanHexagons) {
+				for (Point mp : hexagon.getMathematicalPoints()) {
+					CatanPoint catanPoint = cg.getCatanBoard().getPointToDataPoint().get(mp);
+					if (catanPoint.hasOwner()) {
+						var owner = cg.getPlayerData().get(catanPoint.getOwner());
+						hexagon.getResourceType().ifPresent(resource -> {
+							giveResource(owner, resource);
+							if (catanPoint.isCity()) {
 						giveResource(owner, resource);
+							}
+						});
 					}
-					});
 				}
 			}
 		}

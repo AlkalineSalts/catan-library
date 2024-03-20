@@ -55,6 +55,9 @@ public class BuildDevelopmentCard extends Command {
 		if (builtDevelopmentCard == null) {
 			builtDevelopmentCard = getRandomDevelopmentCard(cg);
 		}
+		else {
+			throw new IllegalStateException();
+		}
 		giveDevelopmentCard(player, builtDevelopmentCard);
 	}
 	

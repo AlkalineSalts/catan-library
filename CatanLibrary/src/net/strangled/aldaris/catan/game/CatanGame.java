@@ -75,7 +75,9 @@ public class CatanGame implements JsonSerializable {
 			catanHexagon.getResourceType().ifPresentOrElse(resource -> {}, () -> thiefOn = new Point(catanHexagon.getX(), catanHexagon.getY()));
 		}
 	}
-	
+	public Point getThiefOn() {
+		return thiefOn;
+	}
 	public boolean canMoveThiefHere(Point point) {
 		return (point != null && !point.equals(thiefOn) && catanBoard.hexagonExists(point));
 	}
@@ -204,14 +206,14 @@ public class CatanGame implements JsonSerializable {
 			//assumes that the trade is a valid trade given by getBestForeignTrade
 			Player player = playerData.get(trade.issuingPlayer());
 			player.removeTheseResources(trade.willGiveThis());
-			player.giveTheseResource(trade.forThis());
+			player.giveTheseResources(trade.forThis());
 		} else {
 		
 		playerData.get(trade.recipient()).removeTheseResources(trade.forThis());
 		playerData.get(trade.issuingPlayer()).removeTheseResources(trade.willGiveThis());
 		
-		playerData.get(trade.recipient()).giveTheseResource(trade.willGiveThis());
-		playerData.get(trade.issuingPlayer()).giveTheseResource(trade.forThis());
+		playerData.get(trade.recipient()).giveTheseResources(trade.willGiveThis());
+		playerData.get(trade.issuingPlayer()).giveTheseResources(trade.forThis());
 		
 		proposedTrades.remove(trade);
 		
@@ -242,6 +244,8 @@ public class CatanGame implements JsonSerializable {
 		//the second command check checks if the command parameters are valid (is this a valid point, far enough away from others)
 		if (canDoCommand) {
 			executeCommand(command);
+		} else {
+			throw new IllegalArgumentException("cannot perform this command:" + command);
 		}
 		
 	}

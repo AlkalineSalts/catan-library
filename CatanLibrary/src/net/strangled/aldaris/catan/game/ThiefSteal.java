@@ -34,7 +34,7 @@ public class ThiefSteal extends GameState {
 	}
 	@Override
 	public void apply(Command command, CatanGame catanGame) {
-		command.canApply(catanGame, this);
+		command.apply(catanGame, this);
 	}
 	
 }

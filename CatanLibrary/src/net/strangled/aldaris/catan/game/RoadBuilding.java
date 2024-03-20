@@ -4,7 +4,9 @@ import net.strangled.aldaris.catan.game.CatanGame.GameState;
 
 public class RoadBuilding extends GameState {
 	public static final int ID = 777;
-	public RoadBuilding() {
+	private static final RoadBuilding rb = new RoadBuilding();
+	public static RoadBuilding getState() {return rb;}
+	private RoadBuilding() {
 	}
 
 	@Override
@@ -23,7 +25,7 @@ public class RoadBuilding extends GameState {
 	}
 	@Override
 	public void apply(Command command, CatanGame catanGame) {
-		command.canApply(catanGame, this);
+		command.apply(catanGame, this);
 	}
 	
 

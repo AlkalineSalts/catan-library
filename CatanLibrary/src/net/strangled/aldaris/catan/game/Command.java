@@ -82,7 +82,7 @@ public abstract class Command implements JsonSerializable {
 		return cg.getRandomDevelopmentCard();
 	}
 	
-	//same idea for players, players sshould not be modifiable outside of commands
+	//same idea for players, players should not be modifiable outside of commands
 	
 	protected final void giveDevelopmentCard(Player player, DevelopmentCard d) {
 		player.giveDevelopmentCard(d);
@@ -100,7 +100,7 @@ public abstract class Command implements JsonSerializable {
 	}
 	
 	protected final void giveTheseResource(Player player, Map<Resource, Integer> resourcesAmount) {
-		player.giveTheseResource(resourcesAmount);
+		player.giveTheseResources(resourcesAmount);
 	}
 
 	

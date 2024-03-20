@@ -55,7 +55,7 @@ public class PlayDevelopmentCard extends Command {
 				if (card.getBuiltDevelopmentCard() == developmentCard) {builtThisTurn++;}
 			}
 		}
-		return builtThisTurn < cg.getPlayerData().get(this.getPlayerTakingAction()).getDevelopmentCards().get(developmentCard);
+		return builtThisTurn < cg.getPlayerData().get(this.getPlayerTakingAction()).getDevelopmentCards().get(developmentCard) || developmentCard == DevelopmentCard.VICTORY_POINT;
 		
 	}
 	

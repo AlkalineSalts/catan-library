@@ -5,6 +5,8 @@ import net.strangled.aldaris.catan.game.command.MoveThiefTo;
 import net.strangled.aldaris.catan.game.command.RollDice;
 
 public class ThiefMove extends GameState {
+	private static ThiefMove tm = new ThiefMove();
+	public static final ThiefMove getState() {return tm;}
 	public static final int ID = 6;
 	@Override
 	public int getId() {

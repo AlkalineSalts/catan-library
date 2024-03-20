@@ -15,6 +15,7 @@ import net.strangled.aldaris.catan.game.command.PlaceRoad;
 import net.strangled.aldaris.catan.game.command.PlaceSettlement;
 import net.strangled.aldaris.catan.game.command.PlayDevelopmentCard;
 import net.strangled.aldaris.catan.game.command.ProposeTrade;
+import net.strangled.aldaris.catan.game.command.RollDice;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -37,6 +38,7 @@ public class CommandFactory {
 		idToMakeFunction.put(ChooseResource.ID, ChooseResource::new);
 		idToMakeFunction.put(ChoosePlayer.ID, ChoosePlayer::new);
 		idToMakeFunction.put(MakeCity.ID, MakeCity::new);
+		idToMakeFunction.put(RollDice.ID, RollDice::new);
 		
 		
 	}

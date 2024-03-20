@@ -17,8 +17,8 @@ public class CatanHexagon implements JsonSerializable{
 	private static final String collectResourceNumberString = "collectResourceNumber";
 	private Integer collectResourceNumber;
 	private Resource resourceType;
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 	private CatanHexagon(int x, int y, Integer collectNumber, Resource rType) {
 		this.x = x;
 		this.y = y;
@@ -56,6 +56,10 @@ public class CatanHexagon implements JsonSerializable{
 	}
 	public int getY() {
 		return y;
+	}
+	
+	public Point getPoint() {
+		return new Point(x, y);
 	}
 	
 	@Override
