@@ -27,7 +27,12 @@ public class RegularPlayPreRoll extends GameState {
 	public GameState getNextState(CatanGame cg) {
 		var commandHistory = cg.getCommandHistory();
 		if (!commandHistory.isEmpty() && commandHistory.get(0).getId() == RollDice.ID) {
-			return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);
+			RollDice rd = (RollDice)commandHistory.get(0);
+			if (rd.getRolledNumber() == 7) {
+				return GameStateFactory.get().getGameState(DiscardPhase.ID);
+			}
+			else 
+			{return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);}
 		}
 		else {
 			return this;

@@ -9,6 +9,7 @@ import javax.json.JsonObjectBuilder;
 import net.strangled.aldaris.catan.Resource;
 import net.strangled.aldaris.catan.game.CatanGame;
 import net.strangled.aldaris.catan.game.Command;
+import net.strangled.aldaris.catan.game.DiscardPhase;
 import net.strangled.aldaris.catan.game.Monopoly;
 import net.strangled.aldaris.catan.game.Player;
 import net.strangled.aldaris.catan.game.YearOfPlenty;
@@ -44,6 +45,19 @@ public class ChooseResource extends Command {
 	public boolean canApply(CatanGame cg, Monopoly r) {
 		return this.isPlayersTurn(cg);
 	}
+	
+	@Override
+	public boolean canApply(CatanGame cg, DiscardPhase d) {
+		Player player = cg.getPlayerData().get(getPlayerTakingAction());
+		return player.getAmountOfResources() > 7 && player.getResources().get(resource) > 0;
+	}
+	
+	@Override
+	public void apply(CatanGame cg, DiscardPhase d) {
+		Player player = cg.getPlayerData().get(getPlayerTakingAction());
+		removeResource(player, resource);
+	}
+	
 	@Override
 	public void apply(CatanGame cg, Monopoly r) {
 		int numberOfResource = 0;

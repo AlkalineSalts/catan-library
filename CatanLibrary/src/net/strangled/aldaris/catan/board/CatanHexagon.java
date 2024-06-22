@@ -45,7 +45,7 @@ public class CatanHexagon implements JsonSerializable{
 		return  points;
 	}
 	
-	public int getCollectResourceNumber() {
+	public Integer getCollectResourceNumber() {
 		return collectResourceNumber;
 	}
 	public Optional<Resource> getResourceType() {

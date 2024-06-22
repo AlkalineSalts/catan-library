@@ -15,7 +15,7 @@ public class RollDice extends Command {
 	private Integer rolledNumber;
 	
 	public static final int ID = 0;
-	private static final Random random = new Random();
+	private static final Random random = new Random(2002);
 	private static final String rolledNumberString = "rolledNumber";
 	
 	
@@ -50,7 +50,7 @@ public class RollDice extends Command {
 	public void apply(CatanGame cg, RegularPlayPreRoll r) {
 		
 		if (rolledNumber == 7) {
-			
+			//do nothing, intentionally so
 			
 		}
 		else {

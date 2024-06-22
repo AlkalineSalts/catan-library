@@ -13,6 +13,9 @@ public class GameStateFactory {
 		idToGameState.put(GameStart.ID, GameStart.getState());
 		idToGameState.put(RegularPlayPreRoll.ID, RegularPlayPreRoll.getState());
 		idToGameState.put(RegularPlayPostRoll.ID, RegularPlayPostRoll.getState());
+		idToGameState.put(ThiefMove.ID, ThiefMove.getState());
+		idToGameState.put(ThiefSteal.ID, ThiefSteal.getState());
+		idToGameState.put(DiscardPhase.ID, DiscardPhase.getState());
 	}
 	public GameState getGameState(int id) {
 		var state = idToGameState.get(id);

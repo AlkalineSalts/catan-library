@@ -7,7 +7,6 @@ import net.strangled.aldaris.catan.game.command.AcceptTrade;
 import net.strangled.aldaris.catan.game.command.BuildDevelopmentCard;
 import net.strangled.aldaris.catan.game.command.ChoosePlayer;
 import net.strangled.aldaris.catan.game.command.ChooseResource;
-import net.strangled.aldaris.catan.game.command.DiscardCard;
 import net.strangled.aldaris.catan.game.command.EndTurn;
 import net.strangled.aldaris.catan.game.command.MakeCity;
 import net.strangled.aldaris.catan.game.command.MoveThiefTo;
@@ -30,7 +29,6 @@ public class CommandFactory {
 		idToMakeFunction.put(ProposeTrade.ID, ProposeTrade::new);
 		idToMakeFunction.put(BuildDevelopmentCard.ID, BuildDevelopmentCard::new);
 		idToMakeFunction.put(EndTurn.ID, EndTurn::new);
-		idToMakeFunction.put(DiscardCard.ID, DiscardCard::new);
 		idToMakeFunction.put(MoveThiefTo.ID, MoveThiefTo::new);
 		idToMakeFunction.put(PlaceRoad.ID, PlaceRoad::new);
 		idToMakeFunction.put(PlayDevelopmentCard.ID, PlayDevelopmentCard::new);

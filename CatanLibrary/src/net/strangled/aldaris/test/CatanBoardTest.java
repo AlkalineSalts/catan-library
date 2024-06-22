@@ -5,6 +5,8 @@ import net.strangled.aldaris.catan.math.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Random;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CatanBoardTest {
+	Random r;
 	CatanBoard board;
 	CatanBoard regularGameBoard; //a game that has started
 	@BeforeAll
@@ -28,10 +31,11 @@ class CatanBoardTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		 board = new StandardCatanBoard();
+		 r = new Random(100);
+		 board = new StandardCatanBoard(r);
+		 r = new Random(100);
 		 
-		 
-		 regularGameBoard = new StandardCatanBoard();
+		 regularGameBoard = new StandardCatanBoard(r);
 			Point settlement1p1 = new Point(1, 1);
 			Point settlement1p2 = new Point(2, 1);
 			Point settlement2p1 = new Point(1,3);

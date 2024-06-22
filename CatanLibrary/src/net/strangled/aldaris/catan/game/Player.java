@@ -1,6 +1,7 @@
 package net.strangled.aldaris.catan.game;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.json.Json;
@@ -83,6 +84,12 @@ public class Player implements JsonSerializable {
 	
 	protected void giveResource(Resource r) {
 		resources.compute(r, (resource, amount) -> amount + 1);
+	}
+	
+	protected void removeResource(Resource r) {
+		HashMap<Resource, Integer> m = new HashMap<>();
+		m.put(r, 1);
+		removeTheseResources(m);
 	}
 	
 	protected void removeTheseResources(Map<Resource, Integer> resourcesAmount) {

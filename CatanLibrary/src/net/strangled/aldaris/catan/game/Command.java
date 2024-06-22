@@ -44,6 +44,8 @@ public abstract class Command implements JsonSerializable {
 	
 	public boolean canApply(CatanGame cg, ThiefMove r) {return false;}
 	
+	public boolean canApply(CatanGame cg, DiscardPhase r) {return false;}
+	
 	
 	public void apply(CatanGame cg, GameStart g) {}
 	
@@ -62,6 +64,8 @@ public abstract class Command implements JsonSerializable {
 	public void apply(CatanGame cg, YearOfPlenty r) {}
 	
 	public void apply(CatanGame cg, ThiefMove r) {}
+	
+	public void apply(CatanGame cg, DiscardPhase r) {}
 	
 	//use the template to complete json object for subclasses
 	public abstract void _toJson(JsonObjectBuilder builder); //template design pattern
@@ -103,7 +107,9 @@ public abstract class Command implements JsonSerializable {
 		player.giveTheseResources(resourcesAmount);
 	}
 
-	
+	protected final void removeResource(Player player, Resource r) {
+		player.removeResource(r);
+	}
 	
 	@Override
 	public JsonObjectBuilder toJson() {

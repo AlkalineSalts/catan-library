@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -31,9 +32,12 @@ import net.strangled.aldaris.catan.game.CommandFactory;
 import net.strangled.aldaris.catan.game.GameStart;
 import net.strangled.aldaris.catan.game.GameStateFactory;
 import net.strangled.aldaris.catan.game.Player;
+import net.strangled.aldaris.catan.game.RegularPlayPostRoll;
 import net.strangled.aldaris.catan.game.RegularPlayPreRoll;
+import net.strangled.aldaris.catan.game.ThiefMove;
 import net.strangled.aldaris.catan.game.command.BuildDevelopmentCard;
 import net.strangled.aldaris.catan.game.command.EndTurn;
+import net.strangled.aldaris.catan.game.command.MoveThiefTo;
 import net.strangled.aldaris.catan.game.command.PlaceRoad;
 import net.strangled.aldaris.catan.game.command.PlaceSettlement;
 import net.strangled.aldaris.catan.game.command.PlayDevelopmentCard;
@@ -45,7 +49,7 @@ class CatanGameTest {
 	
 	static ArrayList<DevelopmentCard> cardList;
 	CatanBoard establishedBoard;
-	
+	Random r;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		cardList = new ArrayList<DevelopmentCard>(25);
@@ -67,7 +71,7 @@ class CatanGameTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		
+		r = new Random(100);
 		
 	}
 
@@ -91,7 +95,7 @@ class CatanGameTest {
 	}
 	
 	private CatanGame setUpCatanGameToRegular(List<DevelopmentCard> cardList) {
-		StandardCatanBoard board = new StandardCatanBoard();
+		StandardCatanBoard board = new StandardCatanBoard(r);
 		var g = new CatanGame(board, cardList, new Player(1), new Player(2));
 		PlaceSettlement p1s1 = new PlaceSettlement(1, new Point(0, 0));
 		PlaceSettlement p1s2 = new PlaceSettlement(1, new Point(3, 2));
@@ -136,7 +140,7 @@ class CatanGameTest {
 
 	@Test
 	void testRunThroughStart() {
-		StandardCatanBoard board = new StandardCatanBoard();
+		StandardCatanBoard board = new StandardCatanBoard(r);
 		var g = new CatanGame(board, cardList, new Player(1), new Player(2));
 		Assert.assertTrue(getGameState(g).getId() == GameStart.ID);
 		PlaceSettlement p1s1 = new PlaceSettlement(1, new Point(0, 0));
@@ -276,6 +280,24 @@ class CatanGameTest {
 		
 		
 		
+	}
+	@Test
+	public void thiefTest() {
+		CatanGame game = setUpCatanGameToRegular(cardList);
+		var rollDice1 = getRollDice(1, 7);
+		var end1 = new EndTurn(1);
+		var end2 = new EndTurn(2);
+		game.processCommand(rollDice1);
+		var testingHexagon = new Point(2, 3);
+		var moveThief = new MoveThiefTo(1, testingHexagon);
+		Assert.assertTrue(game.getCurrentPlayer().intValue() == 1);
+		Assert.assertTrue(getGameState(game).getId() == ThiefMove.ID);
+		Assert.assertTrue(game.canProcessCommand(moveThief));
+		game.processCommand(moveThief);
+		int resourceCollectNumber = game.getCatanBoard().getCoordinateToDataHexagon().get(testingHexagon).getCollectResourceNumber();
+		Resource collectResource = game.getCatanBoard().getCoordinateToDataHexagon().get(testingHexagon).getResourceType().get();
+		Assert.assertTrue(getGameState(game).getId() == RegularPlayPostRoll.ID);
+		Assert.assertEquals(game.getPlayerData().get(2).getAmountOfResources(), 0);
 	}
 	
 	

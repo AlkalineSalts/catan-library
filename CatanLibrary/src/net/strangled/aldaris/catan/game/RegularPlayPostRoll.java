@@ -28,7 +28,6 @@ public class RegularPlayPostRoll extends GameState {
 	public GameState getNextState(CatanGame cg) {
 		List<Command> commandHistory = cg.getCommandsDoneThisTurn();
 		if (commandHistory.isEmpty()) {return this;}
-		//TODO : innacurate (more needed) end condition, add dev card transitions, fix 
 		if (commandHistory.get(0).getId() == EndTurn.ID) {
 			//end turn go back to start
 			cg.setCurrentPlayerIndex(cg.getCurrentPlayerIndex() + 1 % cg.getPlayerOrder().size());

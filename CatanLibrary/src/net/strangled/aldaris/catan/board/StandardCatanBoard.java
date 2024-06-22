@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -15,13 +16,13 @@ import net.strangled.aldaris.catan.math.Point;
 
 public class StandardCatanBoard extends CatanBoard {
 	public static int ID = 1;
-	public StandardCatanBoard() {
+	public StandardCatanBoard(Random randomSrc) {
 		super(ID);
 		//creates the catan board in three steps: step one is making the hexagons
 		//make the 1st and 5th rows, then the second and fourth, and finally the third
 	{
 		List<Integer> potentialNumbers = new LinkedList<>(Stream.of(2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12).toList());
-		Collections.shuffle(potentialNumbers);
+		Collections.shuffle(potentialNumbers, randomSrc);
 		
 		List<Resource> resourceList = new LinkedList<>();
 		for (int i = 0; i < 3; i++) {
@@ -35,7 +36,7 @@ public class StandardCatanBoard extends CatanBoard {
 		resourceList.add(Resource.WHEAT);
 		resourceList.add(Resource.WOOD);
 		resourceList.add(null);
-		Collections.shuffle(resourceList);
+		Collections.shuffle(resourceList, randomSrc);
 		
 		
 		BiConsumer<Integer, Integer> generatorFunction = (y, toX) -> {

@@ -1,6 +1,7 @@
 package net.strangled.aldaris.catan.game;
 
 import net.strangled.aldaris.catan.game.CatanGame.GameState;
+import net.strangled.aldaris.catan.game.command.ChoosePlayer;
 import net.strangled.aldaris.catan.game.command.MoveThiefTo;
 import net.strangled.aldaris.catan.game.command.RollDice;
 
@@ -17,7 +18,12 @@ public class ThiefMove extends GameState {
 	public GameState getNextState(CatanGame cg) {
 		var history = cg.getCommandsDoneThisTurn();
 		if (history.size() > 1 && history.get(0).getId() == MoveThiefTo.ID) {
-			return ThiefSteal.getState();
+			if (ChoosePlayer.getValidStealTargets(cg).size() > 0) {
+				return ThiefSteal.getState();
+			}
+			else {
+				return RegularPlayPostRoll.getState();
+			}
 		}
 		return this;
 	}

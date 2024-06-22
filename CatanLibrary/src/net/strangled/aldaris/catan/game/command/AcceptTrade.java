@@ -21,7 +21,7 @@ public class AcceptTrade extends Trade {
 		return ID;
 	}
 	
-	private boolean canApply(CatanGame cg) {return isPlayersTurn(cg) && cg.hasBeenProposed(getCatanTrade()) || cg.getBestForeignTrade(getCatanTrade()).isPresent();}
+	private boolean canApply(CatanGame cg) {return cg.hasBeenProposed(getCatanTrade()) || (isPlayersTurn(cg) && cg.getBestForeignTrade(getCatanTrade()).isPresent());}
 	private void apply(CatanGame cg) {
 			cg.acceptTrade(getCatanTrade());
 		}

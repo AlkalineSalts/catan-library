@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,6 +81,16 @@ public class CatanGame implements JsonSerializable {
 	}
 	public boolean canMoveThiefHere(Point point) {
 		return (point != null && !point.equals(thiefOn) && catanBoard.hexagonExists(point));
+	}
+	
+	public Set<Integer> getPlayerIdsOnHex(Point hexPoint) {
+		Point[] boardPoints = catanBoard.getCoordinateToDataHexagon().get(hexPoint).getMathematicalPoints();
+		Set<Integer> playersOnPoint = new HashSet<Integer>();
+		for (Point p : boardPoints) {
+			Integer maybePlayerId = catanBoard.getPointToDataPoint().get(p).getOwner();
+			if (maybePlayerId != null) {playersOnPoint.add(maybePlayerId);}
+		}
+		return playersOnPoint;
 	}
 	
 	protected void moveThiefTo(Point point) {
