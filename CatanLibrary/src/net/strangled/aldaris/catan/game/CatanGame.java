@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.stream.Stream;
 
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 import net.strangled.aldaris.catan.DevelopmentCard;
@@ -43,14 +44,14 @@ public class CatanGame implements JsonSerializable {
 	public static List<DevelopmentCard> getDefaultCards() {return (List<DevelopmentCard>) defaultCardList.clone();}
 	private static final Map.Entry<Resource, Integer> defaultForeignTrade = new SimpleImmutableEntry<>(null, 4);
 	
+	
 	private CatanBoard catanBoard;
 	
 	private List<DevelopmentCard> developmentCardDeck;
-	private int developmentCardPosition;
-	
+	private int developmentCardPosition = 0;
 	private final List<Integer> playerOrder; //is an unmodifiable list
 	private Map<Integer, Player> playerData;
-	private int currentPlayerIndex;
+	private int currentPlayerIndex = 0;
 	private List<Command> history; //history is displayed back to front, the oldest command is the farthest from the start
 	private HashSet<CatanTrade> proposedTrades;
 	private GameState gameState;
@@ -60,8 +61,6 @@ public class CatanGame implements JsonSerializable {
 	public CatanGame(CatanBoard board, List<DevelopmentCard> developmentCardDeck, Player... players) {//assumes this is a new game if using this constructor
 		catanBoard = board; 
 		this.developmentCardDeck = developmentCardDeck;
-		developmentCardPosition = 0;
-		currentPlayerIndex = 0;
 		history = new LinkedList<>();
 		proposedTrades = new HashSet<>();
 		playerOrder = new ArrayList<>();
@@ -76,6 +75,7 @@ public class CatanGame implements JsonSerializable {
 			catanHexagon.getResourceType().ifPresentOrElse(resource -> {}, () -> thiefOn = new Point(catanHexagon.getX(), catanHexagon.getY()));
 		}
 	}
+	
 	public Point getThiefOn() {
 		return thiefOn;
 	}
@@ -237,7 +237,31 @@ public class CatanGame implements JsonSerializable {
 	
 	@Override
 	public JsonObjectBuilder toJson() {
-		return null;
+		var builder = Json.createObjectBuilder();
+		builder.add("catanBoard", catanBoard.toJson());
+		
+		//save development card list
+		var devCardList = Json.createArrayBuilder();
+		for (DevelopmentCard d : developmentCardDeck) {
+			devCardList.add(d.getId());
+		}
+		builder.add("developmenCardDeck", devCardList);
+		
+		//save the player order (also saves their ids)
+		var pOrder = Json.createArrayBuilder();
+		for (int playerNum : playerOrder) {
+			pOrder.add(playerNum);
+		}
+		builder.add("playerOrder", pOrder);
+		
+		//save the commands, from these the entire board state can be rebuilt.
+		var commandHistory = Json.createArrayBuilder();
+		for (Command command : history) {
+			commandHistory.add(command.toJson());
+		}
+		builder.add("history", commandHistory);
+		
+		return builder;
 	}
 	private void executeCommand(Command command) {
 		gameState.apply(command, this);

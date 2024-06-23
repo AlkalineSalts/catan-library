@@ -120,4 +120,20 @@ public abstract class Command implements JsonSerializable {
 		return builder;
 	}
 	
+	@Override
+	public final int hashCode() {
+		return getId();
+	}
+	
+	@Override
+	public final boolean equals(Object o) {
+		if (o instanceof Command) {
+			Command c = (Command)o;
+			return toJson().build().equals(c.toJson().build());
+			
+		} else {
+			return false;
+		}
+	}
+	
 }
