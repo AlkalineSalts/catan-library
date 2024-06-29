@@ -29,11 +29,11 @@ public class CatanBoard implements JsonSerializable {
 	protected HashMap<Line, CatanLine> lineToDataLine;
 	private RoadFinder roadFinder; //transient, do not store this data in json or compare in equals
 	private BoardState boardState;
-	private final int boardTypeId;
+
 	
 	///Generates a blank catan board in the begin game state
-	protected CatanBoard(int boardTypeId) {
-		this.boardTypeId = boardTypeId;
+	protected CatanBoard() {
+
 		coordsToDataHexagons = new HashMap<>();
 		pointsToDataPoints = new HashMap<>();
 		lineToDataLine = new HashMap<>();
@@ -44,7 +44,6 @@ public class CatanBoard implements JsonSerializable {
 	}
 	
 	public CatanBoard(JsonObject boardObject) {
-		this(boardObject.getInt("boardTypeId"));
 		for (JsonValue value : boardObject.getJsonArray("catanHexagons")) {
 			var catanHexagon = new CatanHexagon((JsonObject)value);
 			coordsToDataHexagons.put(new Point(catanHexagon.getX(), catanHexagon.getY()), catanHexagon);
@@ -107,15 +106,12 @@ public class CatanBoard implements JsonSerializable {
 		}
 		builder.add("catanLines", lines);
 		builder.add("boardState", boardState.getId());
-		builder.add("boardTypeId", boardTypeId);
 		return builder;
 	}
 	
 	
 	
-	public int getBoardType() {
-		return boardTypeId;
-	}
+	
 	
 	
 	//only for finding the people with the largest roads, discard after use
@@ -247,7 +243,7 @@ public class CatanBoard implements JsonSerializable {
 
 	@Override
 	public int hashCode() {
-		return this.boardTypeId;
+		return 0;
 	}
 
 	@Override
@@ -261,8 +257,6 @@ public class CatanBoard implements JsonSerializable {
 			if (other.boardState != null)
 				return false;
 		} else if (!boardState.equals(other.boardState))
-			return false;
-		if (boardTypeId != other.boardTypeId)
 			return false;
 		if (coordsToDataHexagons == null) {
 			if (other.coordsToDataHexagons != null)

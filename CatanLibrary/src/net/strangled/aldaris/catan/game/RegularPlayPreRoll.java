@@ -29,7 +29,7 @@ public class RegularPlayPreRoll extends GameState {
 		if (!commandHistory.isEmpty() && commandHistory.get(0).getId() == RollDice.ID) {
 			RollDice rd = (RollDice)commandHistory.get(0);
 			if (rd.getRolledNumber() == 7) {
-				return GameStateFactory.get().getGameState(DiscardPhase.ID);
+				return GameStateFactory.get().getGameState(DiscardPhase.ID).getNextState(cg); //will give the discard phase 
 			}
 			else 
 			{return GameStateFactory.get().getGameState(RegularPlayPostRoll.ID);}

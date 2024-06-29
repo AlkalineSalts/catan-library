@@ -39,7 +39,7 @@ public class CatanPoint implements JsonSerializable{
 			throw new IllegalArgumentException("if specifying a trade value, must include an amount of the resource necessary to be traded for the other resource");
 		}
 		else {
-			//if trade ratio exists and is valid
+			//if trade ratio exists and is valid, make immutable
 			this.tradeRatio = new SimpleImmutableEntry<>(tradeRatio.getKey(), tradeRatio.getValue());
 		}
 		optional = Optional.ofNullable(this.tradeRatio);

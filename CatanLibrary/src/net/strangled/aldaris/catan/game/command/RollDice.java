@@ -12,23 +12,22 @@ import net.strangled.aldaris.catan.game.RegularPlayPreRoll;
 import net.strangled.aldaris.catan.math.Point;
 
 public class RollDice extends Command {
-	private Integer rolledNumber;
+	private final int rolledNumber;
 	
 	public static final int ID = 0;
-	private static final Random random = new Random(2002);
 	private static final String rolledNumberString = "rolledNumber";
 	
 	
-	public RollDice(int playerId) {
+	public RollDice(int playerId, int rolledNumber) {
 		super(playerId);
-		rolledNumber = random.nextInt(6) + random.nextInt(6) + 2;
+		this.rolledNumber = rolledNumber;
 	}
 	
 	
 	
 	public RollDice(JsonObject jObj) {
 		super(jObj);
-		rolledNumber = jObj.isNull(rolledNumberString) ? null : jObj.getInt(rolledNumberString);
+		rolledNumber = jObj.getInt(rolledNumberString);
 		
 	}
 	
@@ -50,7 +49,7 @@ public class RollDice extends Command {
 	public void apply(CatanGame cg, RegularPlayPreRoll r) {
 		
 		if (rolledNumber == 7) {
-			//do nothing, intentionally so
+			//do nothing, intentionally so. The game state will change in RegularPlayPreRoll to the next phase
 			
 		}
 		else {
@@ -79,12 +78,7 @@ public class RollDice extends Command {
 
 	@Override
 	public void _toJson(JsonObjectBuilder builder) {
-		if (rolledNumber == null) {
-			builder.addNull(rolledNumberString);
-		} else {
-			builder.add(rolledNumberString, rolledNumber.intValue());
-		}
-
+		builder.add(rolledNumberString, rolledNumber);
 	}
 
 }

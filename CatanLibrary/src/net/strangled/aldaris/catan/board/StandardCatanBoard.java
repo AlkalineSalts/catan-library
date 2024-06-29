@@ -15,9 +15,8 @@ import net.strangled.aldaris.catan.math.Line;
 import net.strangled.aldaris.catan.math.Point;
 
 public class StandardCatanBoard extends CatanBoard {
-	public static int ID = 1;
 	public StandardCatanBoard(Random randomSrc) {
-		super(ID);
+		super();
 		//creates the catan board in three steps: step one is making the hexagons
 		//make the 1st and 5th rows, then the second and fourth, and finally the third
 	{
@@ -68,6 +67,8 @@ public class StandardCatanBoard extends CatanBoard {
 			pointsToDataPoints.putIfAbsent(point, new CatanPoint(point));
 		}
 	}
+	
+	
 	
 	
 	//step three is making the lines
